@@ -119,13 +119,13 @@ function App() {
                 Registro de Atendimento
               </h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-6">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-5 mb-6">
                 {/* Identificação */}
-                <div className="md:col-span-2">
-                   <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Identificação</h3>
+                <div className="md:col-span-12">
+                   <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Identificação</h3>
                 </div>
 
-                <div>
+                <div className="md:col-span-8">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Nome do Estudante</label>
                   <div className="relative">
                     <User className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
@@ -136,7 +136,8 @@ function App() {
                     />
                   </div>
                 </div>
-                <div>
+                
+                <div className="md:col-span-4">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Turma/Série</label>
                   <input 
                     type="text" name="className" value={data.className} onChange={handleInputChange}
@@ -144,7 +145,8 @@ function App() {
                     placeholder="Ex: 9º Ano B"
                   />
                 </div>
-                <div>
+                
+                <div className="md:col-span-6">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Responsável</label>
                   <div className="relative">
                     <Users className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
@@ -155,7 +157,8 @@ function App() {
                     />
                   </div>
                 </div>
-                <div>
+                
+                <div className="md:col-span-6">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Telefone(s)</label>
                   <div className="relative">
                     <Phone className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
@@ -167,32 +170,31 @@ function App() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Data</label>
+                <div className="md:col-span-3">
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Data</label>
+                    <input 
+                        type="date" name="date" value={data.date} onChange={handleInputChange}
+                        className="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                    />
+                </div>
+                
+                <div className="md:col-span-3">
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Horário</label>
+                    <div className="relative">
+                        <Clock className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
                         <input 
-                            type="date" name="date" value={data.date} onChange={handleInputChange}
-                            className="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"
+                            type="time" name="time" value={data.time} onChange={handleInputChange}
+                            className="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 pl-9 p-2 border"
                         />
-                    </div>
-                    <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-1">Horário</label>
-                        <div className="relative">
-                            <Clock className="absolute left-3 top-2.5 text-slate-400 w-4 h-4" />
-                            <input 
-                                type="time" name="time" value={data.time} onChange={handleInputChange}
-                                className="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 pl-9 p-2 border"
-                            />
-                        </div>
                     </div>
                 </div>
 
                 {/* Contexto */}
-                <div className="md:col-span-2 mt-2">
-                   <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3">Contexto</h3>
+                <div className="md:col-span-12 mt-2 pt-4 border-t border-slate-100">
+                   <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Contexto</h3>
                 </div>
 
-                <div>
+                <div className="md:col-span-6">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Solicitado por</label>
                   <select 
                     name="requestedBy" value={data.requestedBy} onChange={handleInputChange}
@@ -206,7 +208,7 @@ function App() {
                   </select>
                 </div>
                 
-                <div>
+                <div className="md:col-span-6">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Motivo</label>
                   <select 
                     name="reason" value={data.reason} onChange={handleInputChange}
