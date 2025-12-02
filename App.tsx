@@ -12,12 +12,14 @@ import {
   User,
   Users,
   Clock,
-  Phone
+  Phone,
+  Mic // Imported Mic
 } from 'lucide-react';
 import { AttendanceData, RefinedContent, SignatureData } from './types';
 import { refineReport } from './services/geminiService';
 import { generatePDF } from './utils/pdfGenerator';
 import SignaturePad from './components/SignaturePad';
+import LiveAssistant from './components/LiveAssistant'; // Import LiveAssistant
 
 const INITIAL_DATA: AttendanceData = {
   studentName: '',
@@ -48,6 +50,7 @@ function App() {
   const [activeSignatureTab, setActiveSignatureTab] = useState<SignatureRole>('responsible');
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showVoiceAssistant, setShowVoiceAssistant] = useState(false); // State for voice modal
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -218,10 +221,19 @@ function App() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">
-                  Notas Brutas da Reunião
-                  <span className="text-slate-400 text-xs font-normal ml-2">(Digite em tópicos, informalmente)</span>
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <label className="block text-sm font-medium text-slate-700">
+                    Notas Brutas da Reunião
+                    <span className="text-slate-400 text-xs font-normal ml-2">(Digite em tópicos ou use a voz)</span>
+                  </label>
+                  <button 
+                    onClick={() => setShowVoiceAssistant(true)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium hover:bg-blue-100 transition-colors border border-blue-200"
+                  >
+                    <Mic size={14} />
+                    Entrada por Voz
+                  </button>
+                </div>
                 <textarea 
                   name="roughNotes" value={data.roughNotes} onChange={handleInputChange}
                   rows={8}
@@ -420,6 +432,20 @@ function App() {
                     Iniciar Novo Atendimento
                  </button>
              </div>
+        )}
+
+        {/* Live Assistant Modal */}
+        {showVoiceAssistant && (
+            <LiveAssistant 
+                onClose={() => setShowVoiceAssistant(false)}
+                onInsertText={(text) => {
+                    setData(prev => ({
+                        ...prev,
+                        roughNotes: prev.roughNotes ? prev.roughNotes + "\n" + text : text
+                    }));
+                    setShowVoiceAssistant(false);
+                }}
+            />
         )}
 
       </main>
